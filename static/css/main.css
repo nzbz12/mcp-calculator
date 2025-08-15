@@ -1,0 +1,312 @@
+/* 全局样式 */
+:root {
+    --primary-color: #0d6efd;
+    --success-color: #198754;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* 加载覆盖层 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* 卡片样式 */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* 状态徽章 */
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-running {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.status-stopped {
+    background-color: #6c757d;
+    color: white;
+}
+
+.status-starting {
+    background-color: var(--warning-color);
+    color: #212529;
+}
+
+.status-stopping {
+    background-color: var(--info-color);
+    color: #212529;
+}
+
+.status-error {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+/* 统计卡片 */
+.stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: rotate(-45deg);
+}
+
+.stats-icon {
+    font-size: 2.5rem;
+    opacity: 0.8;
+}
+
+/* 工具卡片 */
+.tool-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.tool-card.tool-running {
+    border-left-color: var(--success-color);
+    background-color: #f8fff9;
+}
+
+.tool-card.tool-stopped {
+    border-left-color: #6c757d;
+}
+
+.tool-card.tool-error {
+    border-left-color: var(--danger-color);
+    background-color: #fff5f5;
+}
+
+/* 按钮组 */
+.btn-group-sm .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* 文件上传区域 */
+.file-upload-area {
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    border-color: var(--primary-color);
+}
+
+.file-upload-area.dragover {
+    border-color: var(--success-color);
+    background-color: rgba(25, 135, 84, 0.1);
+}
+
+/* 日志容器 */
+.log-container {
+    background-color: #1e1e1e;
+    color: #f8f8f2;
+    font-family: 'Courier New', monospace;
+    padding: 1rem;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.log-entry {
+    margin-bottom: 0.25rem;
+    word-wrap: break-word;
+}
+
+.log-entry.log-error {
+    color: #ff6b6b;
+}
+
+.log-entry.log-warning {
+    color: #ffd93d;
+}
+
+.log-entry.log-info {
+    color: #74b9ff;
+}
+
+/* 导航栏 */
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* 表格样式 */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* 模态框 */
+.modal-header {
+    background-color: var(--light-color);
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* 分页 */
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 2px;
+    border: 1px solid #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* 通知样式 */
+.notification {
+    min-width: 300px;
+    max-width: 400px;
+    margin-bottom: 0.5rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .btn-group-sm .btn {
+        padding: 0.125rem 0.25rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bs-body-bg: #1a1a1a;
+        --bs-body-color: #ffffff;
+    }
+    
+    .card {
+        background-color: #2d2d2d;
+        color: #ffffff;
+    }
+    
+    .table-dark {
+        --bs-table-bg: #2d2d2d;
+    }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 工具提示 */
+.tooltip {
+    font-size: 0.875rem;
+}
+
+/* 进度条动画 */
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* 徽章样式 */
+.badge {
+    font-weight: 500;
+}
+
+/* 输入组样式 */
+.input-group-text {
+    background-color: var(--light-color);
+    border-color: #ced4da;
+}
+
+/* 链接样式 */
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: underline !important;
+}

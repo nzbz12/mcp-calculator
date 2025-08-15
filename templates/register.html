@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}注册 - MCP Cloud Studio{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                    <h3>创建账户</h3>
+                    <p class="text-muted">加入MCP Cloud Studio</p>
+                </div>
+
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">用户名</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" id="username" name="username" required 
+                                   pattern="[a-zA-Z0-9_-]{3,50}" title="3-50个字符，只能包含字母、数字、下划线和连字符">
+                        </div>
+                        <div class="form-text">3-50个字符，只能包含字母、数字、下划线和连字符</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">邮箱</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密码</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="password" name="password" required
+                                   minlength="8" title="密码至少8个字符">
+                        </div>
+                        <div class="form-text">密码至少8个字符</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">确认密码</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="captcha" class="form-label">验证码</label>
+                        <div class="row">
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="captcha" name="captcha_code" required maxlength="4">
+                            </div>
+                            <div class="col-5">
+                                <img id="captcha-image" class="img-fluid border rounded" style="cursor: pointer; height: 38px;" 
+                                     onclick="refreshCaptcha()" title="点击刷新验证码">
+                            </div>
+                        </div>
+                        <input type="hidden" id="captcha-session-id" name="captcha_session_id">
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-user-plus"></i> 注册
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="mb-0">已有账户？ <a href="/login" class="text-decoration-none">立即登录</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 页面加载时获取验证码
+document.addEventListener('DOMContentLoaded', function() {
+    refreshCaptcha();
+});
+
+// 刷新验证码
+async function refreshCaptcha() {
+    try {
+        showLoading();
+        const response = await axios.get('/api/auth/captcha');
+        document.getElementById('captcha-image').src = response.data.image_data;
+        document.getElementById('captcha-session-id').value = response.data.session_id;
+    } catch (error) {
+        showNotification('获取验证码失败', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// 注册表单提交
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirm_password');
+    
+    // 验证密码匹配
+    if (password !== confirmPassword) {
+        showNotification('两次输入的密码不一致', 'error');
+        return;
+    }
+    
+    const registerData = {
+        username: formData.get('username'),
+        email: formData.get('email'),
+        password: password,
+        captcha_code: formData.get('captcha_code'),
+        captcha_session_id: formData.get('captcha_session_id')
+    };
+
+    try {
+        showLoading();
+        const response = await axios.post('/api/auth/register', registerData);
+        
+        showNotification('注册成功！正在跳转到登录页面...', 'success');
+        
+        // 跳转到登录页面
+        setTimeout(() => {
+            window.location.href = '/login';
+        }, 1500);
+        
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.detail) {
+            showNotification(error.response.data.detail, 'error');
+        } else {
+            showNotification('注册失败，请重试', 'error');
+        }
+        
+        // 刷新验证码
+        refreshCaptcha();
+    } finally {
+        hideLoading();
+    }
+});
+
+// 实时密码匹配验证
+document.getElementById('confirmPassword').addEventListener('input', function() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = this.value;
+    
+    if (confirmPassword && password !== confirmPassword) {
+        this.setCustomValidity('密码不匹配');
+        this.classList.add('is-invalid');
+    } else {
+        this.setCustomValidity('');
+        this.classList.remove('is-invalid');
+    }
+});
+</script>
+{% endblock %}

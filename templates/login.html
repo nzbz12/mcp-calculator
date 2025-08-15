@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}登录 - MCP Cloud Studio{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="fas fa-cloud fa-3x text-primary mb-3"></i>
+                    <h3>MCP Cloud Studio</h3>
+                    <p class="text-muted">登录到您的账户</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">用户名</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密码</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="captcha" class="form-label">验证码</label>
+                        <div class="row">
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="captcha" name="captcha_code" required maxlength="4">
+                            </div>
+                            <div class="col-5">
+                                <img id="captcha-image" class="img-fluid border rounded" style="cursor: pointer; height: 38px;" 
+                                     onclick="refreshCaptcha()" title="点击刷新验证码">
+                            </div>
+                        </div>
+                        <input type="hidden" id="captcha-session-id" name="captcha_session_id">
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> 登录
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="mb-0">还没有账户？ <a href="/register" class="text-decoration-none">立即注册</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 页面加载时获取验证码
+document.addEventListener('DOMContentLoaded', function() {
+    refreshCaptcha();
+});
+
+// 刷新验证码
+async function refreshCaptcha() {
+    try {
+        showLoading();
+        const response = await axios.get('/api/auth/captcha');
+        document.getElementById('captcha-image').src = response.data.image_data;
+        document.getElementById('captcha-session-id').value = response.data.session_id;
+    } catch (error) {
+        showNotification('获取验证码失败', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// 登录表单提交
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const loginData = {
+        username: formData.get('username'),
+        password: formData.get('password'),
+        captcha_code: formData.get('captcha_code'),
+        captcha_session_id: formData.get('captcha_session_id')
+    };
+
+    try {
+        showLoading();
+        const response = await axios.post('/api/auth/login', loginData);
+        
+        // 保存token
+        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem('user_info', JSON.stringify(response.data.user));
+        
+        showNotification('登录成功！正在跳转...', 'success');
+        
+        // 跳转到仪表板
+        setTimeout(() => {
+            window.location.href = '/dashboard';
+        }, 1000);
+        
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.detail) {
+            showNotification(error.response.data.detail, 'error');
+        } else {
+            showNotification('登录失败，请重试', 'error');
+        }
+        
+        // 刷新验证码
+        refreshCaptcha();
+    } finally {
+        hideLoading();
+    }
+});
+</script>
+{% endblock %}
