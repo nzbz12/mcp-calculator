@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block title %}MCP Cloud Studio - AI工具云管理平台{% endblock %}
+
+{% block content %}
+<!-- 主页横幅 -->
+<div class="hero-section bg-primary text-white text-center py-5 mb-5 rounded">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-cloud"></i> MCP Cloud Studio
+                </h1>
+                <p class="lead mb-4">
+                    专业的AI工具集成与管理平台<br>
+                    让您轻松部署、管理和监控自定义MCP工具
+                </p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="/register" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-rocket"></i> 立即开始
+                    </a>
+                    <a href="/login" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-sign-in-alt"></i> 立即登录
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <i class="fas fa-server fa-5x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 功能特性 -->
+<div class="container">
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h2 class="mb-4">平台特性</h2>
+            <p class="text-muted lead">强大的功能助您高效管理MCP工具</p>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="feature-icon text-primary mb-3">
+                        <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">文件上传管理</h5>
+                    <p class="card-text">支持拖拽上传，多种文件格式，安全的文件存储和管理机制。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="feature-icon text-success mb-3">
+                        <i class="fas fa-play-circle fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">一键启停</h5>
+                    <p class="card-text">便捷的工具启动和停止控制，实时状态监控和自动故障恢复。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="feature-icon text-info mb-3">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">实时监控</h5>
+                    <p class="card-text">WebSocket实时状态更新，详细的运行统计和性能监控。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="feature-icon text-warning mb-3">
+                        <i class="fas fa-shield-alt fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">安全认证</h5>
+                    <p class="card-text">JWT身份验证，图形验证码，完善的权限管理体系。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="feature-icon text-danger mb-3">
+                        <i class="fas fa-cogs fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">自动化管理</h5>
+                    <p class="card-text">自动重连机制，进程管理，异常处理和日志记录。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <div class="feature-icon text-purple mb-3">
+                        <i class="fas fa-mobile-alt fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">响应式设计</h5>
+                    <p class="card-text">完美支持桌面和移动设备，现代化的用户界面设计。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 使用流程 -->
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h2 class="mb-4">使用流程</h2>
+            <p class="text-muted lead">简单三步，快速上手</p>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+            <div class="text-center">
+                <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <span class="fw-bold fs-4">1</span>
+                </div>
+                <h5>注册账户</h5>
+                <p class="text-muted">创建您的账户，验证邮箱，开始使用平台服务。</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="text-center">
+                <div class="step-number bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <span class="fw-bold fs-4">2</span>
+                </div>
+                <h5>上传工具</h5>
+                <p class="text-muted">上传您的MCP工具文件，配置WebSocket端点。</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="text-center">
+                <div class="step-number bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <span class="fw-bold fs-4">3</span>
+                </div>
+                <h5>管理运行</h5>
+                <p class="text-muted">一键启动工具，实时监控状态，查看运行日志。</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 技术栈 -->
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h2 class="mb-4">技术栈</h2>
+            <p class="text-muted lead">基于现代化技术构建的稳定平台</p>
+        </div>
+    </div>
+    
+    <div class="row g-3 text-center mb-5">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 bg-light h-100">
+                <div class="card-body py-3">
+                    <i class="fab fa-python fa-2x text-primary mb-2"></i>
+                    <h6 class="mb-0">Python</h6>
+                    <small class="text-muted">FastAPI</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-6 col-md-3">
+            <div class="card border-0 bg-light h-100">
+                <div class="card-body py-3">
+                    <i class="fas fa-database fa-2x text-success mb-2"></i>
+                    <h6 class="mb-0">SQLite</h6>
+                    <small class="text-muted">SQLAlchemy</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-6 col-md-3">
+            <div class="card border-0 bg-light h-100">
+                <div class="card-body py-3">
+                    <i class="fab fa-js-square fa-2x text-warning mb-2"></i>
+                    <h6 class="mb-0">JavaScript</h6>
+                    <small class="text-muted">现代ES6+</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-6 col-md-3">
+            <div class="card border-0 bg-light h-100">
+                <div class="card-body py-3">
+                    <i class="fab fa-bootstrap fa-2x text-purple mb-2"></i>
+                    <h6 class="mb-0">Bootstrap</h6>
+                    <small class="text-muted">响应式UI</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 页脚行动区域 -->
+<div class="bg-light py-5 mt-5">
+    <div class="container text-center">
+        <h3 class="mb-3">准备开始了吗？</h3>
+        <p class="text-muted mb-4">立即注册，开始您的MCP工具管理之旅</p>
+        <a href="/register" class="btn btn-primary btn-lg px-5">
+            <i class="fas fa-rocket"></i> 免费注册
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.feature-icon {
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+.step-number {
+    font-size: 1.5rem;
+    margin: 0 auto;
+}
+
+.text-purple {
+    color: #6f42c1 !important;
+}
+
+.bg-purple {
+    background-color: #6f42c1 !important;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 如果用户已登录，直接跳转到仪表板
+document.addEventListener('DOMContentLoaded', function() {
+    if (auth.isLoggedIn()) {
+        // 显示欢迎消息并跳转
+        showNotification(`欢迎回来，${auth.getCurrentUser().username}！`, 'success');
+        setTimeout(() => {
+            window.location.href = '/dashboard';
+        }, 1000);
+    }
+});
+</script>
+{% endblock %}

@@ -1,4 +1,41 @@
+# 现有依赖
 python-dotenv>=1.0.0
 websockets>=11.0.3 
 mcp>=1.8.1
 pydantic>=2.11.4
+
+# Web框架
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# 数据库
+sqlalchemy>=2.0.0
+alembic>=1.12.0
+
+# 用户认证和安全
+passlib>=1.7.4
+python-jose[cryptography]>=3.3.0
+python-multipart>=0.0.6
+bcrypt>=4.0.1
+
+# 验证码生成
+pillow>=10.0.0
+
+# 任务队列和后台任务（可选）
+# celery>=5.3.0
+# redis>=5.0.0
+
+# 文件处理
+aiofiles>=23.2.0
+
+# 前端静态文件
+jinja2>=3.1.2
+
+# 监控和日志
+prometheus-client>=0.19.0
+structlog>=23.2.0
+
+# 其他工具
+requests>=2.31.0
+psutil>=5.9.0
+pydantic-settings>=2.0.0
